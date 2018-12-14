@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+{% load static %}
+
+<head>
+  <title>Login Demo</title>
+  <meta description="Login demo">
+  <meta title="Login demo">
+  <link rel="stylesheet" href="{% static 'login/style.css' %}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+
+<body>
+  <nav>
+    <ul class="nav-menu">
+      {% if request.session.username %}
+      <li><a href="profile">Profile</a></li>
+      <li><a href="logout">Log Out</a></li>
+      {% else %}
+      <li><a href="">Log In</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+  {% if messages %} {% for message in messages %} {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+  <div class="info">{{ message }}</div>
+  {% endif %} {% endfor %} {% endif %}
+  <main>{% block content %} {% endblock content %}</main>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="{% static 'wall/js/likes.js' %} "></script>
+</body>
+
+</html>

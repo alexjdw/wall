@@ -1,0 +1,42 @@
+{% extends 'login/template.html' %} {% block content %}
+<div class="row">
+  <div class="col">
+    <form action="create" method="POST">
+      {% csrf_token %}
+      <h3>Register</h3>
+      <label for="username">Username:</label>
+      <input type="text" name="username"> {% if messages %} {% for message in messages %} {% if message.level == 21 and 'username' in message.tags %}
+      <div class="info">{{ message }}</div>
+      {% endif %} {% endfor %} {% endif %}
+      <label for="email">Email:</label>
+      <input type="email" name="email"> {% if messages %} {% for message in messages %} {% if message.level == 21 and 'email' in message.tags %}
+      <div class="info">{{ message }}</div>
+      {% endif %} {% endfor %} {% endif %}
+      <label for="password">Password:</label>
+      <input type="password" name="password"> {% if messages %} {% for message in messages %} {% if message.level == 21 and 'password' in message.tags %}
+      <div class="info">{{ message }}</div>
+      {% endif %} {% endfor %} {% endif %}
+      <label for="confirm">Confirm Password:</label>
+      <input type="password" name="confirm"> {% if messages %} {% for message in messages %} {% if message.level == 21 and 'confirm' in message.tags %}
+      <div class="info">{{ message }}</div>
+      {% endif %} {% endfor %} {% endif %}
+      <button type="submit" class="button">Submit</button>
+    </form>
+  </div>
+  <div class="col">
+    <form action="submit" method="POST">
+      {% csrf_token %}
+      <h4>Log in</h4>
+      <label for="username">Username or Email:</label>
+      <input type="text" name="username"> {% if messages %} {% for message in messages %} {% if message.level == 21 and 'login-username' in message.tags %}
+      <div class="info">{{ message }}</div>
+      {% endif %} {% endfor %} {% endif %}
+      <label for="password">Password:</label>
+      <input type="password" name="password"> {% if messages %} {% for message in messages %} {% if message.level == 21 and 'login-password' in message.tags %}
+      <div class="info">{{ message }}</div>
+      {% endif %} {% endfor %} {% endif %}
+      <button type="submit" class="button">Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock content%}

@@ -1,0 +1,45 @@
+{% extends 'login/template.html' %} {% block content %} {% load static %}
+<div class="post">
+  <form action="new-post" method="POST">
+    {% csrf_token %}
+    <p>Hi {{ request.session.username }}!</p>
+    <textarea name="post-content"></textarea>
+    <button class="button small">Post</button>
+  </form>
+  <hr>
+</div>
+{% for post in posts %}
+<div class="post">
+  <div class="post-header"><a href="#">{{ post.creator.username }}</a> <em>{{ post.created_on }}</em></div>
+  <p>{{ post.textcontent }}</p>
+  {% if post.imgurl %}
+  <div class="img" style="background-image: url({% static 'wall/img/post'|add:post.imgurl %});">
+  </div>
+  {% if post.heading %}
+  <h3>{{ post.heading }}</h3>
+  {% endif %} {% endif %} {% for comment in post.comments.all reversed %}
+  <div class="comment">
+    <ul class="comment-header h-menu">
+      <li>
+        <i class="fas fa-kiwi-bird"></i>
+      </li>
+      <li>
+        <a href="#">{{ comment.creator.username }}</a>
+      </li>
+      <li>
+        {{ comment.created_on }}
+      </li>
+    </ul>
+    <div class="comment-body">{{ comment.textcontent }}</div>
+    <div class="comment-footer"><button class="button glow small clike" cid="{{ comment.id }}" uid="{{ request.session.user_id }}">Like</button></div>
+  </div>
+  {% endfor %}
+  <form action="add-comment/{{post.id}}" method="post">
+    {% csrf_token %} Reply to {{ post.creator.username }}:
+    <textarea name="comment-content"></textarea>
+    <button type="submit" class="button small">Reply</button>
+  </form>
+  <button class="button small plike" pid="{{ post.id }}" uid="{{request.session.user_id}}" csrf="{% csrf_token %} ">Like</button>
+  <hr>
+</div>
+{% endfor %} {% endblock content %}
